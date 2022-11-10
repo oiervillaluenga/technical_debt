@@ -1,0 +1,4 @@
+
+df.loc[(condition1) & (condition2), columns] = result
+
+df.loc[(df['Column1'] == 0) & df['Column2'].str.contains('±|\+',flags = re.IGNORECASE, na=False)) ,'EspecificacionNominal'] = AC_PAC['Especificacion2'].str.split('±|\+').str.get(0)

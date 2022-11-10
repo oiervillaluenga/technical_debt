@@ -1,0 +1,5 @@
+# Convert to numeric and keep as float 
+df['HELIX TOTAL ERROR RIGHT'] = pd.df(df['column name'], errors = 'coerce').fillna(0)
+
+# Convert to numeric and keep as integer
+df['Version'] = pd.to_numeric(df['column name'],errors = 'coerce', downcast='integer').fillna(0)

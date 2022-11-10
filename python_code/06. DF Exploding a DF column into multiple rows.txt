@@ -1,0 +1,3 @@
+# We explode the dataframe for when there is more than one element separated by ; in the same column
+df = df.assign(**{'col_name':df['col_name'].str.split(';')})
+df = df.explode('col_name')

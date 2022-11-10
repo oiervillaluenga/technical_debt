@@ -1,0 +1,5 @@
+# The next code groups all rows by the columns col1 and gets the max value of col2 and col3    
+df = df.groupby('col1')[['col2','col3']].max().reset_index()
+
+# The next code groups all rows by the columns col1 and col2 gets the max value of col3    
+df = df.groupby(['col1','col2'])['col3'].max().reset_index()

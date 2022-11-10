@@ -1,0 +1,20 @@
+from datetime import datetime
+import glob
+import os 
+import pandas as pd
+
+# We use glob to obtain a list of files in a given folder
+pattern_file = config['path_files'] + '/*'
+files_path = glob.glob(pattern_file) 
+
+# We use a list comprehension with the files of the folder to get their last modified date
+file_time = [os.path.getmtime(i) for i in files_path]
+
+# We combine both lists in a dataframe
+df_files = pd.DataFrame({'path':files_path,'timestamp':file_time})
+
+# We transform the timestamp to datetime
+df_files['datetime'] = pd.to_datetime(df_files['timestamp'], unit='s')
+df_files = df_files.sort_values(by='datetime',ascending = False)
+
+

@@ -1,0 +1,47 @@
+from sqlalchemy.engine import URL
+from sqlalchemy import create_engine
+import pandas as pd
+
+def db_conn_alq(driver,server,database,user,password):
+    """Generate a database connection engine sqlalchemy
+    :param driver: driver to be used
+    :param server: server to be connected to
+    :param database: database to be connected to
+    :param user: user to use for connection
+    :param password: password to use for connection
+
+    >>> db_conn_alq(DRIVER_PRUEBAS,
+                    SERVIDOR_PRUEBAS,
+                    DATABASE_PRUEBAS,
+                    USUARIO_PRUEBAS,
+                    PASSWORD_PRUEBAS)
+    engine
+    """
+    # We create a connection string with the DRIVER, SERVER, DATABASE, UID AND PWD settings
+    connection_string = f"DRIVER={driver};\
+        SERVER={server};\
+            DATABASE={database};\
+                UID={user};\
+                    PWD={password}"
+
+    # We set the connection URL and the engine
+    connection_url = URL.create("mssql+pyodbc", query={"odbc_connect": connection_string})
+    engine = create_engine(connection_url)
+    return engine
+
+
+try: 
+    engine_example = db_conn_alq(config['driver_autoq'],config['server_autoq'],config['database_autoq'],config['user_autoq'],config['password_autoq'])
+except Exception as e:
+    logger.debug('Fallo al ejecutar db_conn_alq')
+    logger.debug(e)
+
+# We define the query with parameters
+sql_placedholder1 = 'SELECT * FROM table WHERE XXX = ? OR YYY = ?'
+
+# We create the parameter(s)
+XXX = 'ejemplo 1'
+YYY= 'ejemplo 2'
+
+# We get the data in a pandas dataframe using the qyer, the engine and the parameter
+df = pd.read_sql(sql_placedholder1, engine_example, params = [XXX,YYY])

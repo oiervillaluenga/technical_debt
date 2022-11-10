@@ -1,0 +1,45 @@
+def validar_int(check_input):
+    '''
+    function checking if your string is a pure digit, int
+    return : bool
+    '''
+    if check_input.isdigit():
+        return True
+    return False
+
+options_comma_separated = 'text for option1, text for option2, text for option3'
+
+def opciones(options_comma_separated):
+    '''It gets the user selection from a range of options
+    :param options_comma_separated: the text with the number of different options to provide to the function
+    :return opciones: the integer with the selected option
+    '''
+    desc_of_options = [options_comma_separated.split(sep = ',')[i]  for i in range(0,options_comma_separated.count(',') + 1)]
+    num_of_options =[i + 1 for i in range(0,options_comma_separated.count(',') + 1)]
+
+    while "La respuesta no es válida, por favor responde con una de las posibles respuestas":
+        prompt = '> '        
+        print('Por favor escoge entre las siguientes opciones:')
+        for description, number in zip(desc_of_options,num_of_options):
+            print('\n')
+            print(f'{number}) {description}')
+
+        opciones = input(prompt)
+
+        # Nos aseguramos de que el input sea un número        
+        while validar_int(opciones) == False: 
+            print('La respuesta no es un número, por favor responde con un número')
+            opciones = input(prompt)
+            
+        while int(opciones) < min(num_of_options) or int(opciones) > max(num_of_options):
+            print("La respuesta no es una de las opciones disponibles, por favor responde con una de las opciones disponibles")
+            opciones = input(prompt)
+            while validar_int(opciones) == False:
+                  print('La respuesta no es un número ni una de las opciones disponibles, por favor responde con una de las opciones disponibles')
+                  opciones = input(prompt)
+
+        return int(opciones)    
+
+if opciones() == 1:
+    # do someting
+elif if opt

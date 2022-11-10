@@ -1,0 +1,17 @@
+def convertir_fechas(date_text):
+    '''Converts a data on the %Y-%m-%d %H:%M:%S format to a datetime object
+    :return: datetime object
+    >>>convertir_fechas(2022-01-01)
+    2022-12-31 00:00:00
+    '''    
+    try: 
+        fecha = datetime.datetime.strptime(date_text, '%Y-%m-%d %H:%M:%S') 
+        return fecha
+    except Exception:
+        return False
+
+while f.convertir_fechas(fecha_inicio) == False:
+    print('Por favor introduce una fecha de inicio válida en formato 2099-12-31 22:15:15')
+    fecha_inicio = input(prompt)
+
+

@@ -1,0 +1,6 @@
+# The data in the config yaml file
+yaml_elements: 'A,B,C,D'
+
+# If the yaml file has been imported as config 
+
+list_of_elements = [config['yaml_elements'].split(sep = ',')[i]  for i in range(0,config['yaml_elements'].count(',') + 1)]

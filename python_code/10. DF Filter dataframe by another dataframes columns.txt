@@ -1,0 +1,6 @@
+df_to_filter
+df_to_be_filtered
+
+columns_as_filter = df_filter.columns.tolist()
+
+df_filtered = df_to_be_filtered[columns_as_filter] 

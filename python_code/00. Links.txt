@@ -1,0 +1,7 @@
+Polars
+
+Modin 
+
+SQL vs Pandas
+
+Real Python Links

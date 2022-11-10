@@ -1,0 +1,47 @@
+import pandas as pd
+import pyodbc as po
+
+
+def db_conn_po(driver,server,database,user,password):
+    """Generate a database connection with pyodbc
+    :param driver: driver to be used
+    :param server: server to be connected to
+    :param database: database to be connected to
+    :param user: user to use for connection
+    :param password: password to use for connection
+
+    >>> db_conn_po(DRIVER_PRUEBAS,
+                    SERVIDOR_PRUEBAS,
+                    DATABASE_PRUEBAS,
+                    USUARIO_PRUEBAS,
+                    PASSWORD_PRUEBAS)
+    connection
+    """
+    # We create a connection string with the DRIVER, SERVER, DATABASE, UID AND PWD settings
+    conn = po.connect(f'Driver={driver};'
+                  f'Server={server};'
+                  f'Database={database};'
+                  f'UID={user};'
+                  f'PWD={password};')
+    cursor = conn.cursor()
+    return conn, cursor
+
+cursor.fast_executemany = True
+        
+# We define the table name
+MY_TABLE = 'tabla_ejemplo'
+
+# We create the truncate statement
+truncate = f'TRUNCATE TABLE {MY_TABLE}'
+
+# We create the insert statement
+insert_without_truncate = f"INSERT INTO {MY_TABLE} (column1, column2, column3) VALUES (?,?,?)"
+
+with db_conn_po(driver,server,database,user,password) conn, cursor:
+    # We truncate the table
+    cursor.execute(truncate)
+    cursor.commit()
+
+    # We insert the values        
+    cursor.executemany(insert,df.values.tolist())
+    cursor.commit()  

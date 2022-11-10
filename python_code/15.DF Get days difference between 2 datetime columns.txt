@@ -1,0 +1,1 @@
+df['Days'] = df['DateTime1'] - df['DateTime2']) / np.timedelta64(1, 'D')

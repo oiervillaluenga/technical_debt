@@ -1,0 +1,8 @@
+df_to_change
+df_as_filter
+
+# TO APPLY CHANGES TO A DATAFRAME, BASED ON ANOTHER DATAFRAME'S VALUES
+ 
+for condition1, conditionx in zip(df_as_filter['column1'].tolist(), df_as_filter['columnx'].tolist()):
+            df_to_change.loc[(df_to_change['column1'] == condition1) & (df_to_change['columnx'] > conditionx),'columntochange'] = whatever_result_we_want_to_assign_to_columntochange
+        
