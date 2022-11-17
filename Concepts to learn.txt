@@ -1,0 +1,51 @@
+DATA EXTRACTION AND MANIPULATION
+Skewness of variables
+Missingness for variables
+Data validation: consistency, constraints, range validation, uniqueness
+Import data from an API 
+Parse data from HTML into a usable format for data analysis 
+
+DATA VISUALIZATION
+Bar charts
+Box plots
+Line graphs
+Histograms
+Scatterplots
+Heatmaps
+Pivot tables
+
+DATA INFERENCE
+Imputation methods
+Transformation to variables
+Types of missingness
+Outliers 
+Statistical distributions: binomial, normal, poisson, t-distribution, chi-square,f-distribution 
+Statistical concepts of hypothesis testing: null hypothesis, alternative hypothesis, one-tailed hypothesis test, two-tailed hypothesis test
+Statistical concepts of experimental design: control group, randomization, confounding variables
+Parameter estimation and confidence intervals
+Random sampling techniques 
+Data sampling 
+Probability of a statistical distribution
+Run statistical tests: t-test, Anova test, chi-square test
+Analyze the results of statistical tests
+
+MACHINE LEARNING
+Splitting data for training, testing, and validation 
+Data leakage
+Scaling data and implement scaling methods 
+Transform categorical data for modelling in Python
+Identify and implement regression problems
+Identify and implement classification problems
+Dimensionality reduction techniques
+Identify clustering problems and implement approaches to them
+Dimensionality reduction techniques
+Evaluate regression models and calculate the metrics 
+Evaluate classification models and calculate the metrics
+Evaluate clustering models
+
+CODING
+Flow and structures of package development 
+Document code packages or modules in python 
+Testing in python 
+Version control in python
+
