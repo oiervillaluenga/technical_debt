@@ -14,6 +14,7 @@ Scatterplots
 Heatmaps
 Pivot tables
 
+
 DATA INFERENCE
 Imputation methods
 Transformation to variables
@@ -42,6 +43,11 @@ Dimensionality reduction techniques
 Evaluate regression models and calculate the metrics 
 Evaluate classification models and calculate the metrics
 Evaluate clustering models
+K-means
+Sentiment Analysis
+XGBoost
+Random Forest
+
 
 CODING
 Flow and structures of package development 
