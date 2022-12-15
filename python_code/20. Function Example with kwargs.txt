@@ -1,0 +1,41 @@
+https://thepythoncodingbook.com/2022/11/30/what-are-args-and-kwargs-in-python/
+
+You have 3 teams (represented using the dictionaries) and the function adds members to the teams. Each member starts off with some number of points:
+You’re using both *args and **kwargs in this function. 
+When you call the function, you can first use any number of positional arguments (without a keyword) followed by any number of keyword arguments:
+
+    The positional arguments are assigned to the tuple teams
+    The keyword arguments are assigned to the dictionary people
+
+Stephen, Kate, and Sharon are in both the red team and the blue team. Mary and Trevor are in the red and green teams. Ishaan is just in the blue team.
+
+red_team = {"Stephen": 4}
+blue_team = {}
+green_team = {}
+
+def add_team_members(*teams, **people):
+    for person, points in people.items():
+        for team in teams:
+            if person not in team.keys():
+                team[person] = points
+            else:
+                print(f"{person} is already in the team.")
+
+
+#Stephen, Kate and Sharon are added to the red and blue teams
+add_team_members(red_team, blue_team, Stephen=10, Kate=8, Sharon=12)
+
+#Mary and Trevor are added to the red and green teams
+add_team_members(red_team, green_team, Mary=3, Trevor=15)
+
+#Ishaan is added to the blue team
+add_team_members(blue_team, Ishaan=8)
+
+print(f"{red_team = }")
+print(f"{blue_team = }")
+print(f"{green_team = }")
+
+Stephen is already in the team
+red_team = {'Stephen': 10, 'Kate': 8, 'Sharon': 12, 'Mary': 3, 'Trevor': 15}
+blue_team = {'Stephen': 10, 'Kate': 8, 'Sharon': 12, 'Ishaan': 8}
+green_team = {'Mary': 3, 'Trevor': 15}
