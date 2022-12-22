@@ -1,0 +1,25 @@
+# We want to create a summary table with data aggregated by decade
+def create_summary_per_decade(x):
+    '''Starting from dataframe x we create dictionary d, which we will use to create dataframe d
+    :param x: dataframe from which to obtain data to create the calculations
+    '''
+    d = {}
+    d['CountSongs'] = x['Title'].count().round(2)
+    d['CountN1Songs'] = x['N1Song'].sum().round(2)
+    d['SongsPerArtist'] = (x['Title'].count() / x['Artist'].nunique()).round(2)
+    d['MeanEntryPos'] = x['EntryPos'].mean().round(2)
+    d['MeanBottomPos'] = x['BottomPos'].mean().round(2)   
+    d['MeanTopPos'] = x['TopPos'].mean().round(2)
+    d['MeanQtyPosClimbed'] = x['QtyPosClimbedTotal'].mean().round(2)
+    d['MeanQtyPosClimbedEntry'] = x['QtyPosClimbedEntry'].mean().round(2)
+    d['MeanDaysInCharts'] = x['DaysInCharts'].mean().round(2)
+    d['MeanDaysToClimbToTop'] = x['DaysToClimbToTop'].mean().round(2)
+    d['MeanDaysAtTop'] = x['DaysAtTop'].mean().round(2)    
+        
+    return pd.Series(d, index=['CountSongs', 'CountN1Songs','SongsPerArtist' \
+        ,'MeanEntryPos', 'MeanBottomPos', 'MeanTopPos'\
+          ,'MeanQtyPosClimbed',  'MeanQtyPosClimbedEntry'\
+            ,'MeanDaysInCharts','MeanDaysToClimbToTop','MeanDaysAtTop'\
+                ])
+
+songs_decade = analysis_per_song_artist.groupby('EntryDecade').apply(create_summary_per_decade)
