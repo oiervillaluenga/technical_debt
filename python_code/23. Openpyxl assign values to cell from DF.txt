@@ -1,0 +1,49 @@
+from openpyxl import load_workbook
+from openpyxl.worksheet.datavalidation import DataValidation
+from openpyxl.styles import Protection
+
+
+# iterate through a dataframe to assign values to specific cells in Excel
+
+wb = load_workbook(path)
+ws = wb['sheet_name']
+
+df
+
+	col1	col2	col3
+
+-------------------------------------
+	A	1	a
+-------------------------------------  
+	D	2	b
+-------------------------------------
+
+
+for index, row in df.iterrows():
+	index = index + 1
+	ws[f'A{index}] = row['col1']
+
+The for loop above would yield:
+ws['A1'] --> A 
+ws['A2'] --> D
+
+# It enables protection
+ws.protection.enable()
+
+
+# Adding decimal type of data validation and showing an error in case that the user wants to insert other type of data
+
+dv_decimal = DataValidation(type="decimal", operator="between", formula1=10, formula2=990)
+dv_decimal.error = 'Por favor selecciona un número entre 10 y 990'
+ws.add_data_validation(dv_decimal)  
+
+#Adding list type of data validation where the list is located in the A2 to A200 cell
+
+dv_list = DataValidation(type="list", formula1='=Lista_Incidencias!$A$2:$A$200', allow_blank=True)
+dv_list.error = 'Por favor selecciona de la lista'
+ws.add_data_validation(dv_list)
+
+ws.save(path)
+wb.close()
+
+

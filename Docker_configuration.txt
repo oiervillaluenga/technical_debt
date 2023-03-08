@@ -1,0 +1,34 @@
+--Create requirements file 
+pip freeze > requirements.txt
+
+--Dockerfile: it creates a docker image include MS ODBC SQL 17 driver and pip install from requirements
+
+FROM python:3.10
+
+WORKDIR C:\\Users\\oier.villaluenga\\Desktop\\pruebasdocker
+
+COPY . .
+
+RUN apt-get update && apt-get install -y curl && \
+    curl https://packages.microsoft.com/keys/microsoft.asc | apt-key add - && \
+    curl https://packages.microsoft.com/config/debian/10/prod.list > /etc/apt/sources.list.d/mssql-release.list && \
+    apt-get update && ACCEPT_EULA=Y apt-get install -y msodbcsql17 && \
+    apt-get install -y unixodbc-dev && \
+    pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
+
+CMD ["python","docker_pruebas.py"]
+
+--Build the docker image
+docker build -t gss .
+
+--Run the docker image with access to a local folder
+docker run -v C:\Users\oier.villaluenga\Desktop\target_mount:/bind_mount gss
+
+--Create a volume
+docker volume create --driver local --opt type=cifs --opt device=//172.23.50.11/olanet/target_mount --opt o=username=oier.villaluenga,password=Workinghere#1,file_mode=0777,dir_mode=0777 dockervolitziar
+
+--Run docker using the volume just created
+docker run -it --mount source=dockervolitziar,target=/bind_mount gss
+
+
+

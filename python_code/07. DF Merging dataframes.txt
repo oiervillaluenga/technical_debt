@@ -1,5 +1,3 @@
-# We merge csvgleason_carpeta with programas_gleason to get the number of CSV files that have a configuration matched
-
 # We merge df2 into df1 and we append _DROP to the common columns on df2
 df_merged = df1.merge(df2,how='left',left_on=['col1','col2'], right_on = ['col1','col2'],suffixes = ('', '_DROP'))
 

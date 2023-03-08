@@ -1,0 +1,4 @@
+# Use the index as if it were .iloc to slice the dataframe row by a numerical value
+# Use the column name to slice the dataframe 
+
+df_debugging.loc[df_debugging.index[0], ['col1']] = 'value'
