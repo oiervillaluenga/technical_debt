@@ -1,5 +1,0 @@
-import yaml
-
-# Abrimos el archivo de configuración y lo cargamos en una variable llamada config
-with open("config.yaml","r") as f:
-    config = yaml.load(f,Loader = yaml.FullLoader)

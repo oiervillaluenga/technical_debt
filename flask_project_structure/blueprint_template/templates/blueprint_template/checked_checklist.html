@@ -1,0 +1,29 @@
+{% extends "response_base.html" %}
+
+{% block content %}
+
+<h2>Selecciona los checklist a procesar</h2>
+<br>
+<div class="formulario"></div>
+<form action="{{ url_for('example_bp.checked_checklist_response') }}" method="post">
+  <fieldset>
+  <input type="hidden" id="id" name="id" value="{{ operario }}" readonly >
+    <br>
+    {% for item in checklist %}
+      {% if item in checked_checklist %}
+        <label for="{{ options }}">
+          <input type="checkbox" id="{{ options }}" name="options[]" value="{{ item }}" checked>
+          {{ item }}
+        </label>
+      {% else %}
+        <label for="{{ options }}">
+          <input type="checkbox" id="{{ options }}" name="options[]" value="{{ item }}"> 
+          {{ item }} 
+        </label>
+      {% endif %}
+    <br>
+    {% endfor %}
+  </fieldset>
+  <button type="submit">Enviar</button>
+</form>
+{% endblock %}

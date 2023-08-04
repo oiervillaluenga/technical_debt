@@ -1,0 +1,13 @@
+CREATE TABLE operario_formacion (
+operario_id INT NOT NULL,
+formacion_id VARCHAR(10) NOT NULL,
+registro_formacion DATE NOT NULL DEFAULT CURRENT_DATE,
+operario_formacion_valoracion INT,
+PRIMARY KEY(operario_id,formacion_id),
+CONSTRAINT fk_operario_formacion_operario_id
+	FOREIGN KEY(operario_id)
+	REFERENCES operario(operario_id),
+CONSTRAINT fk_operario_formacion_formacion_id
+	FOREIGN KEY(formacion_id)
+	REFERENCES formacion(formacion_id)
+)

@@ -1,0 +1,11 @@
+--first we create the connection on the other database (in this case db2
+CREATE EXTENSION IF NOT EXISTS dblink;
+
+
+
+SELECT * 
+INTO t2
+FROM dblink('dbname=db2 user=postgres password=xxx','SELECT col1, col2, col3 FROM t1')
+AS t1(col1 bigint
+, col2 character varying
+, col3 timestamp without time zone)

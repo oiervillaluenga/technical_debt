@@ -1,0 +1,12 @@
+{% extends "response_base.html" %}
+
+{% block content %}
+<form name = "myform" action="{{ url_for(url) }}" method="post">
+<h2 align="center">{{message}}</h2>
+</form>
+
+<script type="text/javascript">
+    document.myform.submit();
+</script>
+
+{% endblock %}
