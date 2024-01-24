@@ -66,6 +66,24 @@ except Exception as e:
     # return render_template('response.html',response_message = response_message)
 
 try:
+    # extract data with multiple columns with the same number of parameters
+    list_of_parameters1 = ['param1','param2','param3']
+    list_of_parameters2 = ['param_a','param_b','param_c']
+
+    query = '''SELECT col1 FROM table1 where col2 IN ({}) and col3 IN ({})'''.format(','.join(['?'] * len(list_of_parameters1)), ','.join(['?'] * len(list_of_parameters1)))
+
+    params_list = list_of_parameters1 + list_of_parameters2
+    params_tuple = tuple(params_list)
+
+    resulting_df = pd.read_sql_query(sql = query, con = sql_server_conn, params= params_tuple, dtype_backend = 'pyarrow')
+
+except Exception as e:
+    response_message = f"""error when extracting data with a variable number of parameters {formatted_query}: {e}"""
+    ci.logger.debug(response_message)
+    #in case that we are working with flask 
+    # return render_template('response.html',response_message = response_message)
+
+try:
     # extract data with multiple columns with a variable number of parameters
     list_of_parameters1 = ['param1','param2','param3']
     list_of_parameters2 = ['param_a','param_b','param_c','param_d']
