@@ -1,0 +1,47 @@
+--extension for integration of databases
+
+CREATE EXTENSION postgres_fdw
+
+CREATE SERVER import_capoliva FOREIGN DATA WRAPPER postgres_fdw
+OPTIONS (host 'MENITSISTEPLANT', port '5432', dbname 'capoliva')
+
+CREATE USER MAPPING FOR conocimiento SERVER import_capoliva OPTIONS 
+(user 'conocimiento', password 'Aprendiendo#1')
+
+create schema import_capoliva_schema
+
+IMPORT FOREIGN SCHEMA public 
+LIMIT TO (operario) 
+from SERVER import_capoliva into public
+
+--create table 
+CREATE TABLE operario_to_codigo_interno (
+    operario_id int, 
+    codigo_interno_id varchar(10) not null,
+    PRIMARY KEY (operario_id, codigo_interno_id)
+)
+
+-- Trigger function to enforce foreign key relationship
+CREATE OR REPLACE FUNCTION enforce_foreign_key()
+RETURNS TRIGGER AS $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1
+        FROM operario
+        WHERE operario_id = NEW.operario_id
+    ) THEN
+        RAISE EXCEPTION 'Referenced record not found in operario';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+
+-- Trigger to call the function before insert
+CREATE TRIGGER before_insert_operario_to_codigo_interno
+BEFORE INSERT ON operario_to_codigo_interno
+FOR EACH ROW EXECUTE FUNCTION enforce_foreign_key();
+
+--example of OK
+insert into operario_to_codigo_interno
+values (1406,1)

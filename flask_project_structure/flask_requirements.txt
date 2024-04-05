@@ -1,0 +1,7 @@
+pandas
+polars
+pyarrow
+pyodbc
+python-dateutil
+PyYAML
+SQLAlchemy

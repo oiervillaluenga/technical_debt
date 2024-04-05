@@ -1,0 +1,70 @@
+def send_email(subject: str, smtp_user: str, smtp_password: str, smtp_server: str, 
+               to_email: str, from_email: str, body_text: Optional[str] = None, 
+               attachment_address: Optional[str] = None, 
+               pandas_table_df: Optional[pd.DataFrame] = None) -> None:
+    """
+    Sends an email with optional PDF attachment and optional pandas DataFrame table.
+    
+    Parameters:
+    - subject (str): Subject of the email.
+    - smtp_user (str): User email address for SMTP server login.
+    - smtp_password (str): Password for SMTP server login.
+    - smtp_server (str): Address of the SMTP server.
+    - to_email (str): Recipient's email address.
+    - from_email (str): Sender's email address.
+    - body_text (Optional[str]): Optional body text for the email. Default is None.
+    - attachment_address (Optional[str]): File path to a PDF to attach. Default is None.
+    - pandas_table_df (Optional[pd.DataFrame]): Optional pandas DataFrame to include as HTML. Default is None.
+    
+    Sends an email to the specified recipient with the given subject and optional body text.
+    If an attachment address is provided, attaches the specified PDF file. If a pandas DataFrame
+    is provided, includes it as an HTML table in the email body.
+    """
+    # we open a server connection in a context manager
+    with smtplib.SMTP(smtp_server) as server:
+        server.set_debuglevel(1) # in case that we want to debug the process
+        server.login(user=smtp_user,password=smtp_password)
+
+        # we create the msg
+        msg = MIMEMultipart()
+        msg['Subject'] = f'Pedido de compra de Egile para pedido #{pedido}'
+        msg['From'] = from_email
+        msg['To'] = to_email
+        
+        # if we want to attach a pdf file
+        if attachment_address:                
+            # Attach the PDF file 
+            with open(attachment_address, "rb") as attachment:
+                part = MIMEBase("application", "octet-stream")
+                part.set_payload(attachment.read())
+                        
+            encoders.encode_base64(part)
+            part.add_header(
+                "Content-Disposition",
+                f"attachment; filename= filename.pdf",
+            )
+            msg.attach(part)
+                
+        if pandas_table_df and body_text:
+            table_html = pandas_table_df.to_html(index = False)
+
+            # we join the text and tables together in a html
+            html_content = f'<html><body>{body_text}<br><br>{table_html}</body></html>'
+
+        elif body_text:
+            html_content = f'<html><body>{body_text}</body></html>'
+        
+        elif pandas_table_df:
+            # we convert the table to html
+            table_html = pandas_table_df.to_html(index = False)
+
+            # we join the text and tables together in a html
+            html_content = f'<html><body>{table_html}</body></html>'
+
+        else:
+            server.sendmail(from_email, to_email, msg.as_string())
+
+        msg.attach(MIMEText(html_content, 'html'))
+        server.sendmail(from_email, to_email, msg.as_string())
+                
+

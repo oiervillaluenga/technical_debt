@@ -9,3 +9,9 @@ FROM dblink('dbname=db2 user=postgres password=xxx','SELECT col1, col2, col3 FRO
 AS t1(col1 bigint
 , col2 character varying
 , col3 timestamp without time zone)
+
+
+SELECT
+operario_id
+FROM dblink('dbname=capoliva user=postgres password=Coding#1','SELECT operario_id FROM operario')
+AS t1(operario_id int)

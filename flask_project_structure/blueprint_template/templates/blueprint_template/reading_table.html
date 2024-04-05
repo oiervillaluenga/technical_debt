@@ -1,0 +1,67 @@
+{% extends "response_base.html" %}
+
+{% block content %}
+
+<div class="formulario"></div>
+<form action="{{ url_for('QR_bp.getQR') }}" method="post">
+    <!-- Add the dynamic dropdown list here -->
+    <label for="seleccionpuesto">Escoge un puesto:</label>
+    <select id="seleccionpuesto" name="seleccionpuesto" required>
+        {% if initial_selection %}
+            <option value="{{initial_selection}}" selected>{{initial_selection}}</option>
+        {% else %}
+            <option value="" disabled selected>Escoge un puesto</option>    
+        {% endif %}    
+        {% for puesto in lista_puestos %}
+            <option value="{{ puesto }}">{{ puesto }}</option>
+        {% endfor %}
+    </select><br>
+
+    <textarea id="QR" name="QR" rows="2" cols="100" maxlength="1000" autofocus onfocus="this.select()" onkeydown="if(event.keyCode==13){event.preventDefault();document.getElementById('submit').click();}"
+	placeholder = "Haz click aquí y lee el código QR" 
+	required></textarea><br>
+	<br>
+	<input type="submit" id = "submit" value="Leer QR">
+	</form>
+    <br><br>
+    
+{% if initial_selection %}
+<div class="table-responsive" contentEditable="True" id="editable-table">
+{{ table_html | safe }}
+</div>
+<button id="submit-button">Cargar tabla</button>
+    
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+<script>
+    $(document).ready(function() {
+      // Make all header cells not editable
+      $('#editable-table th').attr('contentEditable', 'false');  
+      
+      // Make all cells not editable
+      $('#editable-table td').not(':nth-child(8)').attr('contentEditable', 'false');
+    
+      // Make cells in column 3 editable
+      $('#editable-table td:nth-child(8)').attr('contentEditable', 'true');
+    });
+</script>
+    
+<script>
+$(document).ready(function() {
+    $('#submit-button').click(function() {
+    
+        var edited_table_html = $('#editable-table').html();
+          
+        $.ajax({
+            type: 'POST',
+            url: '/modificarlecturas_response',
+            data: {edited_table_html: edited_table_html},
+            success:function(response){ document.write(response); }
+        });
+    });
+});
+</script>
+<br>
+{% endif %} 
+<br>
+{% endblock %}

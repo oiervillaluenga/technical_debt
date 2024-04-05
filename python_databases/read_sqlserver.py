@@ -1,11 +1,10 @@
 import pandas as pd
 from modulos import config_inicial as ci
-from funciones import consultas_sql as sql
 from funciones import funciones_generales as f
 
 try: 
     # connect to sql server with pandas and sql alchemy
-    sql_server_conn = f.db_conn_alq_sql(
+    sql_server_conn = f.db_conn_alq_sqlserver(
         driver = ci.config['driver']
         ,server = ci.config['server']
         ,database = ci.config['database']

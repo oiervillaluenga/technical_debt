@@ -1,4 +1,5 @@
 import polars as pl
+import pandas as pd 
 
 try: 
     # create polars dataframe from lists
@@ -23,6 +24,20 @@ except Exception as e:
     #in case that we are working with flask 
     # return render_template('response.html',response_message = response_message)
 
+try:
+    # create polars dataframe from pandas dataframe 
+    polars_pl = pl.from_pandas(pandas_pd,
+                # we define the schema of the imported pd                               
+                schema_overrides = {"col1":pl.Utf8,
+                        "col2":pl.Datetime,
+                        "col3":pl.Datetime,
+                        "col4": pl.Utf8}).lazy()
+except Exception as e:
+    response_message = f"""error when constructing a polars dataframe from pandas: {e}"""
+    #ci.logger.debug(response_message)
+    #in case that we are working with flask 
+    # return render_template('response.html',response_message = response_message)    
+
 try: 
     joined_pl = constructed1_pl.join(
         constructed2_pl,
@@ -31,7 +46,7 @@ try:
         right_on = ['name'],
         suffix = '_right'
         ).with_columns(
-            # we calculate the LTI of the cint, if it is a diameter we need to double the LTS
+            # case when example to determine if it is a male
             pl.when(pl.col("gender").str.contains("(?i)M"))
             .then(True)
             .otherwise(False)
@@ -45,7 +60,11 @@ try:
         ).with_columns(
             pl.col('age').min().over('age_group').alias('min_age_group'),
             pl.col('age').max().over('age_group').alias('max_age_group')
+        ).filter(
+            # if we want to filter the youngest people in each age group
+            pl.col("age") == pl.col("min_age_group") 
         )
+    
 
 except Exception as e:
     response_message = f"""error when transforming: {e}"""

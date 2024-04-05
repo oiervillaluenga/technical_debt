@@ -48,7 +48,7 @@ try:
     
     # we create the query and we insert multiple rows from a dataframe
     insert_sql = '''INSERT INTO table1 (col1,col2) VALUES (?,?)'''
-    cursor.executemany(sql = insert_sql,params= example_df.values.tolist())
+    cursor.executemany(insert_sql,example_df.values.tolist())
     cursor.commit()
 
 except Exception as e:
